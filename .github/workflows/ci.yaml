@@ -1,0 +1,38 @@
+name: Build on PlatformIO and test on Unity
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+
+      - name: Install requirement to QEMU for ESP32
+        run: apt-get install -y libgcrypt20 libglib2.0-0 libpixman-1-0 libsdl2-2.0-0 libslirp0
+
+      - name: Install QEMU for ESP32
+        run: ${HOME}/.platformio/packages/framework-espidf/tools/idf_tools.py install qemu-xtensa qemu-riscv32
+
+      - name: Build PlatformIO Project
+        run: pio run
+
+      - name: Static Analysis with PlatformIO Project
+        run: pio check --fail-on-defect=high --fail-on-defect=medium --fail-on-defect=low
+
+      - name: Unity test simulating on QEMU
+        run: pio test -vvv --without-uploading

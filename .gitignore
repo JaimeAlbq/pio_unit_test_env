@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# PlatformIO
+.pio/
+.vscode/*
+!.vscode/extensions.json
+result.bin
