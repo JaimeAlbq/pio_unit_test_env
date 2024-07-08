@@ -26,7 +26,7 @@ jobs:
         run: sudo apt-get install -y libgcrypt20 libglib2.0-0 libpixman-1-0 libsdl2-2.0-0 libslirp0
 
       - name: Install QEMU for ESP32
-        run: ${HOME}/.platformio/packages/framework-espidf/tools/idf_tools.py install qemu-xtensa qemu-riscv32
+        run: python ${HOME}/.platformio/packages/framework-espidf/tools/idf_tools.py install qemu-xtensa qemu-riscv32
 
       - name: Build PlatformIO Project
         run: pio run
