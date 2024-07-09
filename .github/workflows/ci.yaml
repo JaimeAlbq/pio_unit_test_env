@@ -25,8 +25,8 @@ jobs:
       - name: Install requirement to QEMU for ESP32
         run: sudo apt-get install -y libgcrypt20 libglib2.0-0 libpixman-1-0 libsdl2-2.0-0 libslirp0
 
-      - name: Install QEMU for ESP32
-        run: IDF_TOOL=$(sudo find / -name idf_tools.py); python ${IDF_TOOL} install qemu-xtensa qemu-riscv32
+      # - name: Install QEMU for ESP32
+      #   run: IDF_TOOL=$(sudo find / -name idf_tools.py); python ${IDF_TOOL} install qemu-xtensa qemu-riscv32
 
       - name: Build PlatformIO Project
         run: pio run
